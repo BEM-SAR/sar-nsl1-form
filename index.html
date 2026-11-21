@@ -1,0 +1,1639 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>English Course Programme — Final Exam Results Sheet</title>
+  <style>
+    :root {
+      --navy: #143d63;
+      --blue-strip: #164e82;
+      --orange: #e87a1e;
+      --teal: #2088b8;
+      --whatsapp: #1fa855;
+      --danger: #b91c1c;
+      --danger-bg: #fef2f2;
+      --border: #2c475e;
+      --light-bg: #f4f8fb;
+      --text: #1b2631;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      margin: 0;
+      padding: clamp(10px, 2.5vw, 24px);
+      font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+      background-color: #eef2f5;
+      color: var(--text);
+      line-height: 1.4;
+    }
+
+    .sheet {
+      position: relative;
+      overflow: hidden;
+      max-width: 1120px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 0 0 clamp(18px, 3vw, 28px);
+      border: 2px solid var(--navy);
+      border-radius: 6px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Repeating diagonal watermark across the sheet */
+    .watermark-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      grid-auto-rows: minmax(140px, 1fr);
+      align-items: center;
+      justify-items: center;
+      opacity: 0.075;
+    }
+
+    .watermark-item {
+      transform: rotate(-28deg);
+      font-size: clamp(14px, 1.6vw, 20px);
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      color: var(--navy);
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    .sheet > *:not(.watermark-layer) {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Full-width blue strip across the top heading */
+    .heading-strip {
+      width: 100%;
+      padding: clamp(12px, 2vw, 16px) clamp(14px, 3vw, 32px);
+      background: linear-gradient(90deg, var(--navy) 0%, var(--blue-strip) 55%, var(--teal) 100%);
+      color: #ffffff;
+      text-align: center;
+      border-bottom: 3px solid var(--orange);
+    }
+
+    .heading-strip .strip-title {
+      margin: 0;
+      font-size: clamp(15px, 2.4vw, 24px);
+      font-weight: 800;
+      letter-spacing: clamp(0.8px, 0.2vw, 2px);
+      text-transform: uppercase;
+      overflow-wrap: anywhere;
+    }
+
+    .heading-strip .strip-subtitle {
+      margin: 4px 0 0;
+      font-size: clamp(10.5px, 1.3vw, 13px);
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      color: #ffd5a8;
+    }
+
+    .sheet-body {
+      padding: clamp(12px, 2.5vw, 16px) clamp(12px, 3vw, 32px) 0;
+    }
+
+    .top-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      border-bottom: 2px solid var(--navy);
+      padding-bottom: 16px;
+    }
+
+    .logo-box {
+      flex: 0 0 auto;
+    }
+
+    .logo-box svg {
+      width: clamp(64px, 8vw, 84px);
+      height: clamp(64px, 8vw, 84px);
+      display: block;
+    }
+
+    .title-block {
+      flex: 1 1 240px;
+      text-align: center;
+      min-width: 0;
+    }
+
+    .programme-title {
+      margin: 0;
+      font-size: clamp(20px, 2.8vw, 28px);
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      color: var(--navy);
+      overflow-wrap: anywhere;
+    }
+
+    .school-info-box {
+      flex: 1 1 230px;
+      max-width: 300px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 10px 12px;
+      border: 1.5px dashed var(--border);
+      border-radius: 6px;
+      background-color: rgba(244, 248, 251, 0.92);
+      font-size: 13px;
+    }
+
+    .school-field {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .school-field label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--navy);
+      letter-spacing: 0.5px;
+    }
+
+    .school-field .editable-line {
+      min-height: 24px;
+      border-bottom: 1px solid var(--border);
+      padding: 3px 4px;
+      font-weight: 600;
+      color: var(--text);
+      overflow-wrap: anywhere;
+    }
+
+    .school-field .editable-line:empty::before {
+      content: attr(data-placeholder);
+      color: #7f8c8d;
+      font-weight: 400;
+    }
+
+    .meta-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 14px;
+      font-size: clamp(13px, 1.5vw, 14px);
+      font-weight: 600;
+    }
+
+    #examLevel {
+      display: inline-block;
+      min-width: 90px;
+      min-height: 22px;
+      border-bottom: 1px solid var(--border);
+      padding: 1px 4px;
+    }
+
+    .date-field {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      direction: ltr;
+    }
+
+    .en-date-trigger {
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      min-width: 156px;
+      min-height: 32px;
+      padding: 4px 10px;
+      font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--text);
+      background-color: rgba(255, 255, 255, 0.96);
+      border: 1.5px solid var(--border);
+      border-radius: 4px;
+      cursor: pointer;
+      direction: ltr;
+      text-align: left;
+    }
+
+    .en-date-trigger:hover {
+      background-color: #f8fafc;
+      border-color: var(--navy);
+    }
+
+    .en-date-trigger:focus {
+      outline: 2px solid var(--orange);
+      background-color: #fff9f2;
+    }
+
+    .en-date-trigger .placeholder {
+      color: #7f8c8d;
+      font-weight: 500;
+    }
+
+    /* Strictly English calendar popover */
+    .en-calendar-popover {
+      position: absolute;
+      top: calc(100% + 6px);
+      right: 0;
+      z-index: 50;
+      width: 280px;
+      background: #ffffff;
+      border: 1.5px solid var(--navy);
+      border-radius: 6px;
+      box-shadow: 0 10px 26px rgba(20, 61, 99, 0.2);
+      padding: 10px;
+      display: none;
+      direction: ltr;
+      font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+    }
+
+    .en-calendar-popover.open {
+      display: block;
+    }
+
+    .cal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4px;
+      margin-bottom: 8px;
+    }
+
+    .cal-nav-btn {
+      min-height: 28px;
+      padding: 2px 8px;
+      font-size: 13px;
+      font-weight: 700;
+      background: var(--light-bg);
+      color: var(--navy);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .cal-nav-btn:hover {
+      background: var(--navy);
+      color: #ffffff;
+    }
+
+    .cal-selects {
+      display: flex;
+      gap: 4px;
+    }
+
+    .cal-select {
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--navy);
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 3px 4px;
+      cursor: pointer;
+    }
+
+    .cal-weekdays {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      text-align: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--teal);
+      margin-bottom: 4px;
+    }
+
+    .cal-days {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 2px;
+    }
+
+    .cal-day-btn {
+      min-height: 30px;
+      padding: 4px 0;
+      font-size: 12px;
+      font-weight: 600;
+      background: transparent;
+      color: var(--text);
+      border: 1px solid transparent;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .cal-day-btn:hover {
+      background: var(--light-bg);
+      border-color: var(--teal);
+      color: var(--navy);
+    }
+
+    .cal-day-btn.selected {
+      background: var(--navy);
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .cal-day-btn.today {
+      border-color: var(--orange);
+    }
+
+    .cal-footer {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
+      padding-top: 6px;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    .cal-action-btn {
+      min-height: 26px;
+      padding: 3px 8px;
+      font-size: 11.5px;
+      font-weight: 700;
+      background: var(--light-bg);
+      color: var(--navy);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+
+    .cal-action-btn:hover {
+      background: var(--orange);
+      color: #ffffff;
+      border-color: var(--orange);
+    }
+
+    .meta-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+    }
+
+    .batch-line {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+
+    .batch-input {
+      min-width: 110px;
+      min-height: 22px;
+      border-bottom: 1.5px solid var(--border);
+      padding: 1px 4px;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .batch-input:empty::before {
+      content: "....../.......";
+      color: #7f8c8d;
+      font-weight: 500;
+    }
+
+    .exam-banner {
+      text-align: center;
+      margin: 18px 0 6px;
+    }
+
+    .exam-banner h2 {
+      margin: 0;
+      font-size: clamp(16px, 2.2vw, 20px);
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      text-decoration: underline;
+      color: var(--navy);
+    }
+
+    .exam-banner p {
+      margin: 4px 0 0;
+      font-size: clamp(12.5px, 1.5vw, 14px);
+      font-weight: 700;
+      color: var(--teal);
+    }
+
+    .translation-note {
+      margin-top: 8px;
+      font-size: 11.5px;
+      color: #334155;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .table-hint {
+      display: none;
+      margin-top: 6px;
+      font-size: 11.5px;
+      color: #475569;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin-top: 8px;
+      border-radius: 4px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 780px;
+      border-collapse: collapse;
+      font-size: 13px;
+      text-align: center;
+      background-color: rgba(255, 255, 255, 0.92);
+    }
+
+    th, td {
+      border: 1.5px solid var(--border);
+      padding: 7px 6px;
+    }
+
+    thead th {
+      background-color: var(--navy);
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    thead tr.sub-header th {
+      background-color: #215582;
+    }
+
+    thead tr.max-row th {
+      background-color: var(--light-bg);
+      color: var(--navy);
+      font-weight: 700;
+    }
+
+    td.name-col {
+      text-align: left;
+      min-width: 140px;
+    }
+
+    td.auto-filled {
+      background-color: #f0f9ff;
+    }
+
+    th.class-col,
+    td.class-col {
+      width: 58px;
+      min-width: 52px;
+      max-width: 68px;
+    }
+
+    td.q-score {
+      min-width: 40px;
+    }
+
+    td.invalid-mark {
+      background-color: var(--danger-bg) !important;
+      outline: 2px solid var(--danger) !important;
+      color: var(--danger);
+      font-weight: 700;
+    }
+
+    td.calc-col {
+      background-color: rgba(250, 252, 254, 0.95);
+      font-weight: 700;
+      color: var(--navy);
+      white-space: nowrap;
+    }
+
+    [contenteditable="true"] {
+      touch-action: manipulation;
+    }
+
+    [contenteditable="true"]:focus {
+      outline: 2px solid var(--orange);
+      background-color: #fff9f2;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 28px;
+      padding-top: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .signature-block {
+      text-align: left;
+      flex: 1 1 240px;
+      max-width: 280px;
+    }
+
+    .sig-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+
+    .sig-name-input {
+      width: 100%;
+      min-height: 26px;
+      border-bottom: 1.5px solid var(--navy);
+      padding: 3px 4px;
+      font-weight: 600;
+      color: var(--text);
+      overflow-wrap: anywhere;
+    }
+
+    .sig-name-input:empty::before {
+      content: attr(data-placeholder);
+      color: #7f8c8d;
+      font-weight: 400;
+      font-style: italic;
+    }
+
+    .actions {
+      max-width: 1120px;
+      margin: 14px auto 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .counter-badge {
+      background-color: #ffffff;
+      border: 1.5px solid var(--navy);
+      color: var(--navy);
+      padding: 9px 14px;
+      border-radius: 4px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .action-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      flex: 1 1 auto;
+      justify-content: flex-end;
+    }
+
+    button {
+      min-height: 40px;
+      padding: 9px 16px;
+      font-size: 13px;
+      font-weight: 700;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      background-color: var(--navy);
+      color: #fff;
+      touch-action: manipulation;
+      transition: background-color 0.2s ease, opacity 0.2s ease;
+    }
+
+    button:hover {
+      background-color: var(--orange);
+    }
+
+    button.whatsapp-btn {
+      background-color: var(--whatsapp);
+    }
+
+    button.whatsapp-btn:hover {
+      background-color: #15803d;
+    }
+
+    button.clear-btn {
+      background-color: #5c6f82;
+    }
+
+    button.clear-btn:hover {
+      background-color: #c0392b;
+    }
+
+    /* Toast alert when a mark exceeds a question's maximum mark */
+    .mark-toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 999;
+      max-width: 380px;
+      background: var(--danger-bg);
+      color: #7f1d1d;
+      border: 2px solid var(--danger);
+      border-left: 8px solid var(--danger);
+      border-radius: 6px;
+      padding: 12px 16px;
+      font-size: 13px;
+      font-weight: 700;
+      box-shadow: 0 8px 24px rgba(185, 28, 28, 0.25);
+      display: none;
+    }
+
+    .mark-toast.show {
+      display: block;
+    }
+
+    @media (max-width: 900px) {
+      .table-hint {
+        display: block;
+      }
+      .school-info-box {
+        max-width: none;
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .top-header {
+        justify-content: center;
+        text-align: center;
+      }
+      .title-block {
+        flex: 1 1 100%;
+      }
+      .meta-bar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .meta-right {
+        align-items: flex-start;
+      }
+      .en-calendar-popover {
+        left: 0;
+        right: auto;
+      }
+      .footer {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .signature-block {
+        max-width: none;
+      }
+      .actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .counter-badge {
+        text-align: center;
+      }
+      .action-buttons {
+        flex-direction: column;
+      }
+      .action-buttons button {
+        width: 100%;
+      }
+      .mark-toast {
+        left: 16px;
+        right: 16px;
+        max-width: none;
+      }
+    }
+
+    @media print {
+      body {
+        background: #fff;
+        padding: 0;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .sheet {
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+        padding: 0 0 10px;
+        max-width: 100%;
+      }
+      .sheet-body {
+        padding: 12px 10px 0;
+      }
+      table {
+        min-width: 0;
+      }
+      .table-hint,
+      .translation-note,
+      .en-calendar-popover,
+      .cal-icon,
+      .mark-toast {
+        display: none !important;
+      }
+      .en-date-trigger {
+        border: none;
+        background: transparent;
+        padding: 0;
+        min-width: 0;
+      }
+      .school-info-box {
+        border-style: solid;
+        background-color: #fff;
+      }
+      .school-field .editable-line:empty::before,
+      .sig-name-input:empty::before,
+      .batch-input:empty::before {
+        content: "";
+      }
+      .actions {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="sheet" id="printableSheet">
+    <!-- Repeating Watermark: BEM-SAR-B.LONG PHONICS PROGRAM -->
+    <div class="watermark-layer" aria-hidden="true">
+      <div class="watermark-item">BEM-SAR-B.LONG PHONICS PROGRAM</div>
+      <div class="watermark-item">BEM-SAR-B.LONG PHONICS PROGRAM</div>
+      <div class="watermark-item">BEM-SAR-B.LONG PHONICS PROGRAM</div>
+      <div class="watermark-item">BEM-SAR-B.LONG PHONICS PROGRAM</div>
+      <div class="watermark-item">BEM-SAR-B.LONG PHONICS PROGRAM</div>
+      <div class="watermark-item">BEM-SAR-B.LONG PHONICS PROGRAM</div>
+      <div class="watermark-item">BEM-SAR-B.LONG PHONICS PROGRAM</div>
+      <div class="watermark-item">BEM-SAR-B.LONG PHONICS PROGRAM</div>
+      <div class="watermark-item">BEM-SAR-B.LONG PHONICS PROGRAM</div>
+      <div class="watermark-item">BEM-SAR-B.LONG PHONICS PROGRAM</div>
+      <div class="watermark-item">BEM-SAR-B.LONG PHONICS PROGRAM</div>
+      <div class="watermark-item">BEM-SAR-B.LONG PHONICS PROGRAM</div>
+      <div class="watermark-item">BEM-SAR-B.LONG PHONICS PROGRAM</div>
+      <div class="watermark-item">BEM-SAR-B.LONG PHONICS PROGRAM</div>
+      <div class="watermark-item">BEM-SAR-B.LONG PHONICS PROGRAM</div>
+    </div>
+
+    <!-- Full-Width Blue Strip Across the Top Heading -->
+    <div class="heading-strip">
+      <div class="strip-title">BEM-SAR-B.LONG PHONICS PROGRAM</div>
+      <div class="strip-subtitle">OFFICIAL EXAMINATION &amp; ASSESSMENT RECORD</div>
+    </div>
+
+    <div class="sheet-body">
+      <header class="top-header">
+        <div class="logo-box" aria-label="SAR Sound and Read Logo">
+          <svg width="84" height="84" viewBox="0 0 120 120" role="img">
+            <circle cx="60" cy="60" r="56" fill="none" stroke="#143d63" stroke-width="5" />
+            <circle cx="60" cy="60" r="49" fill="none" stroke="#e87a1e" stroke-width="2.5" />
+            <text x="60" y="42" text-anchor="middle" font-size="22" font-weight="800" fill="#e87a1e" font-family="Arial, sans-serif">SAR</text>
+            <path d="M36 52 V76 Q48 72 60 78 Q72 72 84 76 V52" fill="none" stroke="#143d63" stroke-width="3.5" />
+            <line x1="60" y1="54" x2="60" y2="78" stroke="#143d63" stroke-width="2.5" />
+            <circle cx="60" cy="61" r="7" fill="none" stroke="#e87a1e" stroke-width="2" />
+            <text x="60" y="94" text-anchor="middle" font-size="11.5" font-style="italic" font-weight="700" fill="#2088b8" font-family="Georgia, serif">Sound and Read</text>
+          </svg>
+        </div>
+
+        <div class="title-block">
+          <h1 class="programme-title">English Course Programme</h1>
+        </div>
+
+        <div class="school-info-box">
+          <div class="school-field">
+            <label>School Name</label>
+            <div id="schoolName" class="editable-line" contenteditable="true" data-placeholder="Enter school name..."></div>
+          </div>
+          <div class="school-field">
+            <label>City</label>
+            <div id="schoolCity" class="editable-line" contenteditable="true" data-placeholder="Enter city..."></div>
+          </div>
+        </div>
+      </header>
+
+      <div class="meta-bar">
+        <div><strong>Level:</strong> <span id="examLevel" contenteditable="true">Level 1</span></div>
+        <div class="meta-right">
+          <div class="date-field" id="dateFieldContainer">
+            <label for="examDateBtn"><strong>Date:</strong></label>
+            <input type="hidden" id="examDate" value="" />
+            <button type="button" id="examDateBtn" class="en-date-trigger" aria-haspopup="dialog" aria-expanded="false">
+              <span id="examDateDisplay" class="placeholder">DD/MM/YYYY</span>
+              <span class="cal-icon" aria-hidden="true">📅</span>
+            </button>
+
+            <!-- Strictly English Calendar Popover -->
+            <div class="en-calendar-popover" id="enCalendarPopover" role="dialog" aria-label="Choose Exam Date">
+              <div class="cal-header">
+                <button type="button" class="cal-nav-btn" id="calPrevBtn" aria-label="Previous Month">‹</button>
+                <div class="cal-selects">
+                  <select id="calMonthSelect" class="cal-select" aria-label="Month"></select>
+                  <select id="calYearSelect" class="cal-select" aria-label="Year"></select>
+                </div>
+                <button type="button" class="cal-nav-btn" id="calNextBtn" aria-label="Next Month">›</button>
+              </div>
+              <div class="cal-weekdays">
+                <div>Sun</div>
+                <div>Mon</div>
+                <div>Tue</div>
+                <div>Wed</div>
+                <div>Thu</div>
+                <div>Fri</div>
+                <div>Sat</div>
+              </div>
+              <div class="cal-days" id="calDaysGrid"></div>
+              <div class="cal-footer">
+                <button type="button" class="cal-action-btn" id="calTodayBtn">Today</button>
+                <button type="button" class="cal-action-btn" id="calClearBtn">Clear</button>
+              </div>
+            </div>
+          </div>
+          <div class="batch-line">
+            <strong>Batch NSL</strong><span id="batchNumber" class="batch-input" contenteditable="true"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="exam-banner">
+        <h2>Final Exam Results Sheet</h2>
+        <p>To SAR Board of Exams</p>
+      </div>
+
+      <div class="translation-note">
+        Auto-transliteration active between English and Arabic names — click either name cell anytime to edit or correct manually.
+      </div>
+      <div class="table-hint">Tip: Swipe horizontally across the table on smaller screens to view all columns.</div>
+
+      <div class="table-wrap">
+        <table id="resultsTable">
+          <thead>
+            <tr>
+              <th rowspan="2" style="width: 42px;">No.</th>
+              <th rowspan="2">Candidate Names<br />(In English)</th>
+              <th rowspan="2">Candidate Names<br />(In Arabic)</th>
+              <th rowspan="2" class="class-col">Class</th>
+              <th colspan="7">Question</th>
+              <th rowspan="2">Total Mark</th>
+              <th rowspan="2">%</th>
+              <th rowspan="2">Rank</th>
+            </tr>
+            <tr class="sub-header">
+              <th>1</th>
+              <th>2</th>
+              <th>3</th>
+              <th>4</th>
+              <th>5</th>
+              <th>6</th>
+              <th>7</th>
+            </tr>
+            <tr class="max-row">
+              <th colspan="4">Maximum Mark</th>
+              <th>7</th>
+              <th>4</th>
+              <th>4</th>
+              <th>13</th>
+              <th>52</th>
+              <th>26</th>
+              <th>26</th>
+              <th>132</th>
+              <th>100%</th>
+              <th>—</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Rows generated dynamically -->
+          </tbody>
+        </table>
+      </div>
+
+      <footer class="footer">
+        <div>SAR — Sound and Read</div>
+        <div class="signature-block">
+          <div class="sig-title">Language School Headmaster</div>
+          <div id="headmasterName" class="sig-name-input" contenteditable="true" data-placeholder="Enter headmaster's name..."></div>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <div class="actions">
+    <div class="counter-badge" id="submissionCounter">Submissions: 0</div>
+    <div class="action-buttons">
+      <button type="button" onclick="addRow()">+ Add Candidate Row</button>
+      <button type="button" class="clear-btn" onclick="resetForm()">Clear Form</button>
+      <button type="button" id="submitWhatsAppBtn" class="whatsapp-btn" onclick="submitAndShareWhatsApp()">
+        Submit &amp; Share via WhatsApp
+      </button>
+      <button type="button" onclick="window.print()">Print Results Sheet</button>
+    </div>
+  </div>
+
+  <div class="mark-toast" id="markToast" role="status" aria-live="polite"></div>
+
+  <script>
+    const tbody = document.querySelector("#resultsTable tbody");
+    const counterEl = document.getElementById("submissionCounter");
+    const markToast = document.getElementById("markToast");
+
+    // Strictly English Date Picker Elements
+    const examDateInput = document.getElementById("examDate");
+    const examDateBtn = document.getElementById("examDateBtn");
+    const examDateDisplay = document.getElementById("examDateDisplay");
+    const calPopover = document.getElementById("enCalendarPopover");
+    const calMonthSelect = document.getElementById("calMonthSelect");
+    const calYearSelect = document.getElementById("calYearSelect");
+    const calDaysGrid = document.getElementById("calDaysGrid");
+    const calPrevBtn = document.getElementById("calPrevBtn");
+    const calNextBtn = document.getElementById("calNextBtn");
+    const calTodayBtn = document.getElementById("calTodayBtn");
+    const calClearBtn = document.getElementById("calClearBtn");
+
+    const EN_MONTHS = [
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+
+    const todayObj = new Date();
+    let viewYear = todayObj.getFullYear();
+    let viewMonth = todayObj.getMonth();
+    let toastTimeout = null;
+
+    function showMarkAlert(message) {
+      markToast.textContent = message;
+      markToast.classList.add("show");
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        markToast.classList.remove("show");
+      }, 3200);
+    }
+
+    function initEnglishCalendar() {
+      calMonthSelect.innerHTML = EN_MONTHS
+        .map((m, idx) => `<option value="${idx}">${m}</option>`)
+        .join("");
+
+      const startYear = 2020;
+      const endYear = 2035;
+      let yearOptions = "";
+      for (let y = startYear; y <= endYear; y++) {
+        yearOptions += `<option value="${y}">${y}</option>`;
+      }
+      calYearSelect.innerHTML = yearOptions;
+      renderCalendarDays();
+    }
+
+    function pad2(n) {
+      return String(n).padStart(2, "0");
+    }
+
+    function setExamDate(isoStr) {
+      examDateInput.value = isoStr;
+      if (isoStr) {
+        const [y, m, d] = isoStr.split("-");
+        examDateDisplay.textContent = `${d}/${m}/${y}`;
+        examDateDisplay.classList.remove("placeholder");
+      } else {
+        examDateDisplay.textContent = "DD/MM/YYYY";
+        examDateDisplay.classList.add("placeholder");
+      }
+      renderCalendarDays();
+    }
+
+    function renderCalendarDays() {
+      calMonthSelect.value = String(viewMonth);
+      calYearSelect.value = String(viewYear);
+
+      const firstDayOfWeek = new Date(viewYear, viewMonth, 1).getDay();
+      const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+      const selectedIso = examDateInput.value;
+      const todayIso = `${todayObj.getFullYear()}-${pad2(todayObj.getMonth() + 1)}-${pad2(todayObj.getDate())}`;
+
+      let html = "";
+      for (let i = 0; i < firstDayOfWeek; i++) {
+        html += `<div></div>`;
+      }
+
+      for (let day = 1; day <= daysInMonth; day++) {
+        const iso = `${viewYear}-${pad2(viewMonth + 1)}-${pad2(day)}`;
+        const classes = ["cal-day-btn"];
+        if (iso === selectedIso) classes.push("selected");
+        if (iso === todayIso) classes.push("today");
+        html += `<button type="button" class="${classes.join(" ")}" data-iso="${iso}">${day}</button>`;
+      }
+
+      calDaysGrid.innerHTML = html;
+    }
+
+    examDateBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const isOpen = calPopover.classList.toggle("open");
+      examDateBtn.setAttribute("aria-expanded", String(isOpen));
+      if (isOpen) {
+        if (examDateInput.value) {
+          const [y, m] = examDateInput.value.split("-").map(Number);
+          viewYear = y;
+          viewMonth = m - 1;
+        }
+        renderCalendarDays();
+      }
+    });
+
+    calPopover.addEventListener("click", (e) => {
+      e.stopPropagation();
+    });
+
+    calMonthSelect.addEventListener("change", () => {
+      viewMonth = Number(calMonthSelect.value);
+      renderCalendarDays();
+    });
+
+    calYearSelect.addEventListener("change", () => {
+      viewYear = Number(calYearSelect.value);
+      renderCalendarDays();
+    });
+
+    calPrevBtn.addEventListener("click", () => {
+      viewMonth -= 1;
+      if (viewMonth < 0) {
+        viewMonth = 11;
+        viewYear -= 1;
+      }
+      renderCalendarDays();
+    });
+
+    calNextBtn.addEventListener("click", () => {
+      viewMonth += 1;
+      if (viewMonth > 11) {
+        viewMonth = 0;
+        viewYear += 1;
+      }
+      renderCalendarDays();
+    });
+
+    calDaysGrid.addEventListener("click", (e) => {
+      const btn = e.target.closest(".cal-day-btn");
+      if (!btn) return;
+      setExamDate(btn.dataset.iso);
+      calPopover.classList.remove("open");
+      examDateBtn.setAttribute("aria-expanded", "false");
+    });
+
+    calTodayBtn.addEventListener("click", () => {
+      const now = new Date();
+      viewYear = now.getFullYear();
+      viewMonth = now.getMonth();
+      const iso = `${viewYear}-${pad2(viewMonth + 1)}-${pad2(now.getDate())}`;
+      setExamDate(iso);
+      calPopover.classList.remove("open");
+      examDateBtn.setAttribute("aria-expanded", "false");
+    });
+
+    calClearBtn.addEventListener("click", () => {
+      setExamDate("");
+      calPopover.classList.remove("open");
+      examDateBtn.setAttribute("aria-expanded", "false");
+    });
+
+    document.addEventListener("click", () => {
+      if (calPopover.classList.contains("open")) {
+        calPopover.classList.remove("open");
+        examDateBtn.setAttribute("aria-expanded", "false");
+      }
+    });
+
+    // Bidirectional Arabic <-> English Name Transliteration with manual override support
+    const AR_TO_EN_MAP = {
+      "ا": "a", "أ": "a", "إ": "i", "آ": "aa", "ء": "", "ؤ": "o", "ئ": "i",
+      "ب": "b", "ت": "t", "ث": "th", "ج": "j", "ح": "h", "خ": "kh",
+      "د": "d", "ذ": "dh", "ر": "r", "ز": "z", "س": "s", "ش": "sh",
+      "ص": "s", "ض": "d", "ط": "t", "ظ": "z", "ع": "a", "غ": "gh",
+      "ف": "f", "ق": "q", "ك": "k", "ل": "l", "م": "m", "ن": "n",
+      "ه": "h", "ة": "a", "و": "w", "ي": "y", "ى": "a",
+      "َ": "a", "ُ": "u", "ِ": "i", "ّ": "", "ْ": "", "ً": "an", "ٌ": "un", "ٍ": "in",
+      "ـ": ""
+    };
+
+    const EN_DIGRAPHS_TO_AR = [
+      ["sh", "ش"],
+      ["th", "ث"],
+      ["kh", "خ"],
+      ["gh", "غ"],
+      ["dh", "ذ"],
+      ["ch", "تش"],
+      ["ph", "ف"]
+    ];
+
+    const EN_SINGLE_TO_AR = {
+      "a": "ا", "b": "ب", "c": "ك", "d": "د", "e": "ي", "f": "ف",
+      "g": "ج", "h": "ه", "i": "ي", "j": "ج", "k": "ك", "l": "ل",
+      "m": "م", "n": "ن", "o": "و", "p": "ب", "q": "ق", "r": "ر",
+      "s": "س", "t": "ت", "u": "و", "v": "ف", "w": "و", "x": "كس",
+      "y": "ي", "z": "ز"
+    };
+
+    function capitalizeWords(str) {
+      return str
+        .split(/\s+/)
+        .filter(Boolean)
+        .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+        .join(" ");
+    }
+
+    function transliterateArabicToEnglish(arabicText) {
+      const cleaned = arabicText.replace(/[^\u0600-\u06FF\s-]/g, "").trim();
+      if (!cleaned) return "";
+
+      const words = cleaned.split(/\s+/).map((word) => {
+        let out = "";
+        for (let i = 0; i < word.length; i++) {
+          const ch = word[i];
+          if (i === 0 && (ch === "ا" || ch === "أ" || ch === "إ") && word[1] === "ل") {
+            out += "al";
+            i += 1;
+            continue;
+          }
+          if (ch === "و" && i === 0 && word.length > 1) {
+            out += "wa";
+            continue;
+          }
+          if (Object.prototype.hasOwnProperty.call(AR_TO_EN_MAP, ch)) {
+            out += AR_TO_EN_MAP[ch];
+          } else {
+            out += ch;
+          }
+        }
+        return out.charAt(0).toUpperCase() + out.slice(1);
+      });
+
+      return words.join(" ");
+    }
+
+    function transliterateEnglishToArabic(englishText) {
+      const cleaned = englishText.replace(/[^A-Za-z\s-]/g, "").toLowerCase().trim();
+      if (!cleaned) return "";
+
+      const words = cleaned.split(/\s+/).map((word) => {
+        let out = "";
+        let i = 0;
+        while (i < word.length) {
+          if (i === 0 && word.startsWith("al") && word.length > 2) {
+            out += "ال";
+            i += 2;
+            continue;
+          }
+          const pair = word.slice(i, i + 2);
+          const digraphMatch = EN_DIGRAPHS_TO_AR.find(([d]) => d === pair);
+          if (digraphMatch) {
+            out += digraphMatch[1];
+            i += 2;
+            continue;
+          }
+          const ch = word[i];
+          if (Object.prototype.hasOwnProperty.call(EN_SINGLE_TO_AR, ch)) {
+            out += EN_SINGLE_TO_AR[ch];
+          } else {
+            out += ch;
+          }
+          i += 1;
+        }
+        return out;
+      });
+
+      return words.join(" ");
+    }
+
+    function hasArabicScript(text) {
+      return /[\u0600-\u06FF]/.test(text);
+    }
+
+    function hasLatinScript(text) {
+      return /[A-Za-z]/.test(text);
+    }
+
+    const INITIAL_ROWS = 12;
+    const TOTAL_MAX = 132;
+    const QUESTION_MAX = [7, 4, 4, 13, 52, 26, 26];
+    let submissionCount = 0;
+    let isAutoTranslating = false;
+
+    function updateCounterDisplay() {
+      counterEl.textContent = `Submissions: ${submissionCount}`;
+    }
+
+    function createRow(index) {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td class="row-num">${index}</td>
+        <td class="name-col eng-name" data-manual="false" contenteditable="true"></td>
+        <td class="name-col ar-name" dir="rtl" data-manual="false" contenteditable="true"></td>
+        <td class="class-col class-input" contenteditable="true"></td>
+        <td class="q-score" data-q="0" data-max="7" contenteditable="true"></td>
+        <td class="q-score" data-q="1" data-max="4" contenteditable="true"></td>
+        <td class="q-score" data-q="2" data-max="4" contenteditable="true"></td>
+        <td class="q-score" data-q="3" data-max="13" contenteditable="true"></td>
+        <td class="q-score" data-q="4" data-max="52" contenteditable="true"></td>
+        <td class="q-score" data-q="5" data-max="26" contenteditable="true"></td>
+        <td class="q-score" data-q="6" data-max="26" contenteditable="true"></td>
+        <td class="calc-col t-mark"></td>
+        <td class="calc-col pct-col"></td>
+        <td class="calc-col rank-col"></td>
+      `;
+      return tr;
+    }
+
+    function buildInitialRows(count = INITIAL_ROWS) {
+      tbody.innerHTML = "";
+      for (let i = 1; i <= count; i++) {
+        tbody.appendChild(createRow(i));
+      }
+    }
+
+    function addRow() {
+      const nextNum = tbody.children.length + 1;
+      tbody.appendChild(createRow(nextNum));
+    }
+
+    function placeCaretAtEnd(el) {
+      el.focus();
+      const range = document.createRange();
+      range.selectNodeContents(el);
+      range.collapse(false);
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+    }
+
+    // Enforce: student's mark on a given question must be <= maximum mark
+    function enforceQuestionMarkBounds(cell) {
+      const qIdx = Number(cell.dataset.q);
+      const maxMark = QUESTION_MAX[qIdx];
+      const raw = cell.innerText.trim();
+
+      if (raw === "") {
+        cell.classList.remove("invalid-mark");
+        return;
+      }
+
+      const val = parseFloat(raw);
+      if (isNaN(val)) {
+        cell.classList.add("invalid-mark");
+        showMarkAlert(`Question ${qIdx + 1}: Enter a numeric mark (0 to ${maxMark}).`);
+        return;
+      }
+
+      if (val > maxMark) {
+        cell.innerText = String(maxMark);
+        cell.classList.remove("invalid-mark");
+        placeCaretAtEnd(cell);
+        showMarkAlert(`Question ${qIdx + 1} maximum mark is ${maxMark}. Mark adjusted to ${maxMark}.`);
+      } else if (val < 0) {
+        cell.innerText = "0";
+        cell.classList.remove("invalid-mark");
+        placeCaretAtEnd(cell);
+        showMarkAlert(`Question ${qIdx + 1} mark cannot be negative. Adjusted to 0.`);
+      } else {
+        cell.classList.remove("invalid-mark");
+      }
+    }
+
+    function computeRowTotal(row) {
+      const qCells = Array.from(row.querySelectorAll(".q-score"));
+      let sum = 0;
+      let hasAnyScore = false;
+
+      qCells.forEach((cell) => {
+        const qIdx = Number(cell.dataset.q);
+        const maxMark = QUESTION_MAX[qIdx];
+        const val = parseFloat(cell.innerText.trim());
+        if (!isNaN(val)) {
+          const bounded = Math.min(Math.max(val, 0), maxMark);
+          sum += bounded;
+          hasAnyScore = true;
+        }
+      });
+
+      const tMarkCell = row.querySelector(".t-mark");
+      const pctCell = row.querySelector(".pct-col");
+
+      if (hasAnyScore) {
+        const cleanSum = Number.isInteger(sum) ? sum : parseFloat(sum.toFixed(2));
+        const pct = ((sum / TOTAL_MAX) * 100).toFixed(1) + "%";
+        tMarkCell.innerText = cleanSum;
+        pctCell.innerText = pct;
+        return cleanSum;
+      } else {
+        tMarkCell.innerText = "";
+        pctCell.innerText = "";
+        return null;
+      }
+    }
+
+    // Track manual edits vs auto-translated values & enforce question maximum marks
+    tbody.addEventListener("input", (e) => {
+      const target = e.target;
+
+      if (!isAutoTranslating) {
+        const row = target.closest("tr");
+        if (target.classList.contains("eng-name")) {
+          const arCell = row.querySelector(".ar-name");
+          const rawText = target.innerText;
+          target.dataset.manual = "true";
+          target.classList.remove("auto-filled");
+
+          if (hasArabicScript(rawText) && !hasLatinScript(rawText)) {
+            isAutoTranslating = true;
+            const arClean = rawText.trim();
+            const enAuto = transliterateArabicToEnglish(arClean);
+            arCell.innerText = arClean;
+            arCell.dataset.manual = "true";
+            arCell.classList.remove("auto-filled");
+            target.innerText = enAuto;
+            target.dataset.manual = "false";
+            target.classList.add("auto-filled");
+            isAutoTranslating = false;
+          } else if (arCell.dataset.manual !== "true") {
+            isAutoTranslating = true;
+            const translatedAr = transliterateEnglishToArabic(rawText);
+            arCell.innerText = translatedAr;
+            if (translatedAr) {
+              arCell.classList.add("auto-filled");
+            } else {
+              arCell.classList.remove("auto-filled");
+            }
+            isAutoTranslating = false;
+          }
+        } else if (target.classList.contains("ar-name")) {
+          const engCell = row.querySelector(".eng-name");
+          const rawText = target.innerText;
+          target.dataset.manual = "true";
+          target.classList.remove("auto-filled");
+
+          if (hasLatinScript(rawText) && !hasArabicScript(rawText)) {
+            isAutoTranslating = true;
+            const enClean = capitalizeWords(rawText.trim());
+            const arAuto = transliterateEnglishToArabic(enClean);
+            engCell.innerText = enClean;
+            engCell.dataset.manual = "true";
+            engCell.classList.remove("auto-filled");
+            target.innerText = arAuto;
+            target.dataset.manual = "false";
+            target.classList.add("auto-filled");
+            isAutoTranslating = false;
+          } else if (engCell.dataset.manual !== "true") {
+            isAutoTranslating = true;
+            const translatedEn = transliterateArabicToEnglish(rawText);
+            engCell.innerText = translatedEn;
+            if (translatedEn) {
+              engCell.classList.add("auto-filled");
+            } else {
+              engCell.classList.remove("auto-filled");
+            }
+            isAutoTranslating = false;
+          }
+        }
+      }
+
+      if (target.classList.contains("q-score")) {
+        enforceQuestionMarkBounds(target);
+        const row = target.closest("tr");
+        computeRowTotal(row);
+      }
+    });
+
+    function rankAndSortCandidates() {
+      const rows = Array.from(tbody.querySelectorAll("tr"));
+
+      const rowData = rows.map((row) => {
+        const total = computeRowTotal(row);
+        const engName = row.children[1].innerText.trim();
+        const arName = row.children[2].innerText.trim();
+        const grade = row.children[3].innerText.trim();
+        const hasContent = Boolean(engName || arName || grade || total !== null);
+        return { row, total, hasContent };
+      });
+
+      rowData.sort((a, b) => {
+        if (a.total !== null && b.total !== null) {
+          return b.total - a.total;
+        }
+        if (a.total !== null) return -1;
+        if (b.total !== null) return 1;
+        if (a.hasContent && !b.hasContent) return -1;
+        if (!a.hasContent && b.hasContent) return 1;
+        return 0;
+      });
+
+      let currentRank = 0;
+      let previousTotal = null;
+      let scoredCount = 0;
+
+      rowData.forEach((item, idx) => {
+        tbody.appendChild(item.row);
+        item.row.querySelector(".row-num").innerText = idx + 1;
+
+        const rankCell = item.row.querySelector(".rank-col");
+        if (item.total !== null) {
+          scoredCount++;
+          if (item.total !== previousTotal) {
+            currentRank = scoredCount;
+            previousTotal = item.total;
+          }
+          rankCell.innerText = currentRank;
+        } else {
+          rankCell.innerText = "";
+        }
+      });
+    }
+
+    function buildReportData() {
+      const school = document.getElementById("schoolName").innerText.trim() || "Not specified";
+      const city = document.getElementById("schoolCity").innerText.trim() || "Not specified";
+      const level = document.getElementById("examLevel").innerText.trim() || "Level 1";
+      const date = formatDisplayDate(examDateInput.value);
+      const rawBatch = document.getElementById("batchNumber").innerText.trim();
+      const batch = rawBatch ? `Batch NSL${rawBatch}` : "Batch NSL....../.......";
+      const headmaster = document.getElementById("headmasterName").innerText.trim() || "Not specified";
+
+      const rows = Array.from(tbody.querySelectorAll("tr"));
+      const entries = [];
+
+      rows.forEach((row) => {
+        const cells = row.querySelectorAll("td");
+        const num = cells[0].innerText.trim();
+        const engName = cells[1].innerText.trim();
+        const arName = cells[2].innerText.trim();
+        const grade = cells[3].innerText.trim();
+        const tMark = cells[11].innerText.trim();
+        const pct = cells[12].innerText.trim();
+        const rank = cells[13].innerText.trim();
+
+        if (engName || arName || grade || tMark) {
+          entries.push({
+            num,
+            engName: engName || "-",
+            arName: arName || "-",
+            grade: grade || "-",
+            tMark: tMark || "-",
+            pct: pct || "-",
+            rank: rank || "-"
+          });
+        }
+      });
+
+      const title = `BEM-SAR-B.LONG PHONICS PROGRAM — Final Exam Results (${school})`;
+      const whatsAppMessage = [
+        "*BEM-SAR-B.LONG PHONICS PROGRAM*",
+        "*English Course Programme*",
+        "*Final Exam Results Sheet — To SAR Board of Exams*",
+        `School: ${school} | City: ${city}`,
+        `Level: ${level} | Date: ${date} | ${batch}`,
+        `Headmaster: ${headmaster}`,
+        "----------------------------------------",
+        entries.length
+          ? entries
+              .map(
+                (e) =>
+                  `Rank ${e.rank} | No. ${e.num}. ${e.engName} (${e.arName}) | Class: ${e.grade} | Total: ${e.tMark}/${TOTAL_MAX} (${e.pct})`
+              )
+              .join("\n")
+          : "(No candidate entries recorded)"
+      ].join("\n");
+
+      return { school, city, level, date, batch, headmaster, entries, title, whatsAppMessage };
+    }
+
+    function formatDisplayDate(isoDate) {
+      if (!isoDate) return "Not specified";
+      const parts = isoDate.split("-");
+      if (parts.length !== 3) return isoDate;
+      const [year, month, day] = parts;
+      return `${day}/${month}/${year}`;
+    }
+
+    function downloadStandaloneReportCopy(data, currentSubNum) {
+      const tableRowsHtml = data.entries.length
+        ? data.entries
+            .map(
+              (e) => `
+              <tr>
+                <td>${escapeHtml(e.num)}</td>
+                <td style="text-align:left;">${escapeHtml(e.engName)}</td>
+                <td dir="rtl" style="text-align:left;">${escapeHtml(e.arName)}</td>
+                <td>${escapeHtml(e.grade)}</td>
+                <td>${escapeHtml(e.tMark)} / ${TOTAL_MAX}</td>
+                <td>${escapeHtml(e.pct)}</td>
+                <td><strong>${escapeHtml(e.rank)}</strong></td>
+              </tr>`
+            )
+            .join("")
+        : `<tr><td colspan="7">No candidate entries recorded.</td></tr>`;
+
+      const reportHtml = `<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <title>${escapeHtml(data.title)} — Report #${currentSubNum}</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 28px; color: #1b2631; }
+    .strip { background: #143d63; color: #fff; padding: 12px 18px; text-align: center; font-weight: bold; letter-spacing: 1.5px; margin-bottom: 16px; }
+    .header { border-bottom: 2px solid #143d63; padding-bottom: 12px; margin-bottom: 16px; }
+    h1 { margin: 0; color: #143d63; font-size: 22px; }
+    h2 { margin: 6px 0 2px; font-size: 16px; text-decoration: underline; }
+    .sub { color: #2088b8; font-weight: bold; font-size: 13px; }
+    .meta { margin-bottom: 16px; font-size: 13px; line-height: 1.6; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 10px; }
+    th, td { border: 1px solid #2c475e; padding: 7px 8px; text-align: center; }
+    th { background: #143d63; color: #fff; }
+    .footer { margin-top: 28px; display: flex; justify-content: space-between; font-size: 13px; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="strip">BEM-SAR-B.LONG PHONICS PROGRAM</div>
+  <div class="header">
+    <h1>English Course Programme</h1>
+    <h2>Final Exam Results Sheet (Submission #${currentSubNum})</h2>
+    <div class="sub">To SAR Board of Exams</div>
+  </div>
+  <div class="meta">
+    <div><strong>School Name:</strong> ${escapeHtml(data.school)} &nbsp;|&nbsp; <strong>City:</strong> ${escapeHtml(data.city)}</div>
+    <div><strong>Level:</strong> ${escapeHtml(data.level)} &nbsp;|&nbsp; <strong>Date:</strong> ${escapeHtml(data.date)} &nbsp;|&nbsp; <strong>${escapeHtml(data.batch)}</strong></div>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>No.</th>
+        <th>Candidate Name (English)</th>
+        <th>Candidate Name (Arabic)</th>
+        <th>Class</th>
+        <th>Total Mark</th>
+        <th>%</th>
+        <th>Rank</th>
+      </tr>
+    </thead>
+    <tbody>${tableRowsHtml}</tbody>
+  </table>
+  <div class="footer">
+    <div>SAR — Sound and Read</div>
+    <div>Language School Headmaster: ${escapeHtml(data.headmaster)}</div>
+  </div>
+</body>
+</html>`;
+
+      const blob = new Blob([reportHtml], { type: "text/html;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      const safeSchool = data.school.replace(/[^a-z0-9_-]+/gi, "_").replace(/^_+|_+$/g, "") || "School";
+      link.href = url;
+      link.download = `BEM-SAR_Results_${safeSchool}_Submission_${currentSubNum}.html`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    function resetForm() {
+      document.getElementById("schoolName").innerText = "";
+      document.getElementById("schoolCity").innerText = "";
+      document.getElementById("examLevel").innerText = "Level 1";
+      setExamDate("");
+      document.getElementById("batchNumber").innerText = "";
+      document.getElementById("headmasterName").innerText = "";
+      buildInitialRows(INITIAL_ROWS);
+    }
+
+    function submitAndShareWhatsApp() {
+      // Ensure all question marks respect their maximum limits before calculating & sharing
+      tbody.querySelectorAll(".q-score").forEach((cell) => enforceQuestionMarkBounds(cell));
+
+      rankAndSortCandidates();
+      submissionCount += 1;
+      updateCounterDisplay();
+
+      const reportData = buildReportData();
+      downloadStandaloneReportCopy(reportData, submissionCount);
+
+      const waUrl = `https://wa.me/?text=${encodeURIComponent(reportData.whatsAppMessage)}`;
+      window.open(waUrl, "_blank", "noopener,noreferrer");
+
+      resetForm();
+    }
+
+    initEnglishCalendar();
+    buildInitialRows();
+    updateCounterDisplay();
+  </script>
+</body>
+</html>
